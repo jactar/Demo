@@ -16,11 +16,36 @@ class Player(Sprite):
         self.vy = 0
     def update(self):
         self.vx = 0
+        self.vy = 0
         keys = pg.key.get_pressed()
         if keys[pg.K_LEFT]:
             self.vx = -5
         if keys[pg.K_RIGHT]:
             self.vx = 5
+        if keys[pg.K_UP] and self.falling == False:
+            self.jump()
+
+            
+        self.rect.x += self.vx
+        self.rect.y += self.vy
+    def gravity(self):
+        if self.rect.y < HEIGHT-40:
+            self.falling = True
+            print("gravity is happening! " + str(self.rect.y))
+            print("falling " + str(self.falling))
+            self.vy += 10
+        elif self.rect.y >= HEIGHT:
+            self.falling = False
+            self.vy = 0
+            self.rect.y = HEIGHT-40
+            print("gravity is NOT happening! " + str(self.rect.y))
+            print("falling " + str(self.falling))
+    def jump(self):
+        self.vy = -75
+        print("jump called")
+
+
+
 
         self.rect.x += self.vx
         self.rect.y += self.vy

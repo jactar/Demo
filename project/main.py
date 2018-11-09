@@ -5,7 +5,7 @@ import pygame as pg
 from pygame.sprite import Sprite
 import random
 from settings import *
-
+from test import *
 
 class Game:
     def __init__(self):
@@ -16,6 +16,7 @@ class Game:
         pg.display.set_caption("jumpy_zzn")
         self.clock = pg.time.Clock()
         self.running = True
+        # self.gravity
         # init pygame and create ...
     def new(self):
         self.all_sprites = pg.sprite.Group()
@@ -30,7 +31,6 @@ class Game:
             self.events()
             self.update()
             self.draw()
-
         # game loop
     def update(self):
         self.all_sprites.update()
@@ -52,13 +52,12 @@ class Game:
         pass
     def show_go_screen(self):
         pass
+    
 
 g = Game()
-
 g.show_go_screen()
-
-while g.running():
+while g.running:
     g.new()
     g.show_go_screen()
 
-pg.quit()
+g.QUIT
