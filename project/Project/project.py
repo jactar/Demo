@@ -1,7 +1,7 @@
-#This file was created by Ricardo Pedrayes And Jacob Tarango
+#This file was created by Ricardo Pedrayes and Jacob Tarango
 
 from settings import *
-from sprites1 import *
+from sprites import *
 import random
 import pygame as pg
 
@@ -51,7 +51,7 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
-        self.screen.line(self.image, WHITE, (0,0), (0,5,), width=1)
+        # self.screen.line(draw.image, (0,0), (0,9), width=1)
         #double buffer
         pg.display.flip()
 
