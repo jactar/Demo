@@ -19,6 +19,10 @@ class Player(Sprite):
         self.max_velocity = -25
         self.up = pg.K_UP
         self.down = pg.K_DOWN
+
+    def __init__(self):
+        Sprite.__init__(self)
+
     def update(self):
         self.vy = 0
         self.vx = 0
@@ -41,8 +45,20 @@ class Player(Sprite):
             self.falling = False
             self.vx = 120
             self.rect.x = HEIGHT-10
+
+    def background(self):
+        self.central_line = py.Rect(self.WIDTH/2, 0, 1, self.HEIGHT)
+
+
     # def borders(self):
     #     if self.rect.x == WIDTH:
     #         self.vx = 0
     def jump(self):
         self.vx = -85
+
+class Ball(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = pg.draw.circle( image, WHITE, (0,0), 5, width=0)
+        Self.image.fill(WHITE)
+        
