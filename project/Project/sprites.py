@@ -19,9 +19,9 @@ class Player(Sprite):
         self.max_velocity = -25
         self.up = pg.K_UP
         self.down = pg.K_DOWN
-
-    def __init__(self):
-        Sprite.__init__(self)
+    def wall1_collision(self):
+        if self.rect.y >= HEIGHT - 5 or self.rect.y <= 5:
+            self.vy = -self.vy
 
     def update(self):
         self.vy = 0
@@ -29,9 +29,10 @@ class Player(Sprite):
         # self.gravity()
         keys = pg.key.get_pressed()
         if keys[self.up]:
-            self.vy = -15
+            self.vy = -7.5
         if keys[self.down]:
-            self.vy = 15
+            self.vy = 7.5
+        self.wall1_collision
         # if keys[pg.K_UP] and self.falling == False:
         #     self.jump()  
 
@@ -46,19 +47,37 @@ class Player(Sprite):
             self.vx = 120
             self.rect.x = HEIGHT-10
 
-    def background(self):
-        self.central_line = py.Rect(self.WIDTH/2, 0, 1, self.HEIGHT)
-
 
     # def borders(self):
     #     if self.rect.x == WIDTH:
     #         self.vx = 0
     def jump(self):
         self.vx = -85
+    
+class Object(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = pg.Surface((5,HEIGHT))
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.center = (WIDTH*6/12, HEIGHT/2)
 
 class Ball(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = pg.draw.circle( image, WHITE, (0,0), 5, width=0)
-        Self.image.fill(WHITE)
-        
+        self.image = pg.Surface((10,10))
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.center = (WIDTH/2, HEIGHT/2)
+        self.falling = False
+        self.velocity = VELOCITY
+        self.vx = self.velocity
+        self.vy = 0
+    def wall_collision(self):
+        if self.rect.y >= HEIGHT - 5 or self.rect.y <= 5:
+            self.vy = -self.vy
+
+    def update(self):
+        self.wall_collision()
+        self.rect.x += self.vx
+        self.rect.y += self.vy
