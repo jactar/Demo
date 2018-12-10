@@ -54,8 +54,8 @@ class Game:
     def collide(self):
             hit = pg.sprite.spritecollideany(self.ball, self.players, False)
             if hit:
-                self.ball.vx = -self.ball.vx * 2
-                self.ball.vy = self.ball.vy + randint(0,3)
+                self.ball.vx = -self.ball.vx * 1.12
+                self.ball.vy = self.ball.vy
             # if hit = True:
             #     self.vx = -vx
                 
