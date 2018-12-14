@@ -4,7 +4,7 @@ TITLE = "Project PONG"
 WIDTH = 650
 HEIGHT = 480
 # frames per second
-FPS = 120
+FPS = 1200
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0,0,0)

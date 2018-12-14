@@ -1,11 +1,39 @@
 #This file was created by Ricardo Pedrayes and Jacob Tarango
+'''
+Sources
+pygame.org
+'''
 
 from settings import *
 from sprites import *
 import random
 from random import randint
 import pygame as pg
-
+''' 
+**********Gameplay ideas:
+The paddles work with the up and down arrow for the right player,
+and W and S keys for player 2
+The ball moves with a speed of 2.5 at the start going right with no vy
+once the ball hits the paddle it speeds up and starts moving with a
+random vy
+once the ball goes past the paddle and hits the left or right boundries
+the ball will return to the center of the screen and start from beginning
+**********Cosmetics
+None
+**********Bugs
+after around 12 hits, the ball gets stuck in a paddle and will
+fly out and go through the other paddle
+Paddles will be able to go through the top and bottom of the screen
+if they are too close to the edges from the bouncing of the wall collision
+function
+**********Gameplay fixes
+Ball will now reset in the middle fo the screen as soon as it 
+leaves the screen on either end, moving at a slow speed kind 
+of like a restart method
+Added borders for the paddles on the top and bottom of the screen
+**********Features
+Great, world class coding, with flawless gameplay.
+'''
 class Game:
     def __init__(self):
         # init game window, try:
@@ -17,10 +45,13 @@ class Game:
         self.running = True
         # init pygame and create...
     def new(self):
+        # putting sprites into groups
         self.players = pg.sprite.Group()
         self.balls = pg.sprite.Group()
+        # Creating the different players
         self.player_1 = Player()
         self.player_2 = Player()
+        # adding the line
         self.Linea = Object()
         # adding ball
         self.ball = Ball()
@@ -47,6 +78,7 @@ class Game:
             self.draw()
 
     def update(self):
+        # Updating the sprites
         self.players.update()
         self.balls.update()
         
@@ -54,13 +86,16 @@ class Game:
     def collide(self):
             hit = pg.sprite.spritecollideany(self.ball, self.players, False)
             if hit:
-                self.ball.vx = -self.ball.vx * 2
-                self.ball.vy = self.ball.vy + randint(0,3)
-            # if hit = True:
-            #     self.vx = -vx
+                if abs(self.ball.vx) <= 10.74:
+                    self.ball.vx = -self.ball.vx + (-.2 * self.ball.vx)
+                elif abs(self.ball.vx) > 10.74:
+                    self.ball.vx = -self.ball.vx
+                self.ball.vy = self.ball.vy + randint(-2,2)
+                print(self.ball.vx)
+
                 
 
-        # update thingsw
+        # update things
     def events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -69,16 +104,10 @@ class Game:
                 self.running = False
         # listening for events
     def draw(self):
+        # setting background black and putting sprites on screen
         self.screen.fill(BLACK)
         self.players.draw(self.screen)
         self.balls.draw(self.screen)
-        
-        # self.draw.rect(self.screen, self.WHITE, self.central_line)
-        # self.screen.draw.line(screen,WHITE,(0,0),(0,10),5)
-        # self.screen.line(draw.image, (0,0), (0,9), width=1)
-        # self.screen.line(self.screen, WHITE, (30, 180), (30, 240), (4))
-        # self.draw.line(screen,WHITE,(0,0),(0,10),(5))
-        #double buffer
         pg.display.flip()
 
     def show_start_screen(self):
