@@ -31,6 +31,7 @@ Ball will now reset in the middle fo the screen as soon as it
 leaves the screen on either end, moving at a slow speed kind 
 of like a restart method
 Added borders for the paddles on the top and bottom of the screen
+set a limit for ball speed so it does not glitch out.
 **********Features
 Great, world class coding, with flawless gameplay.
 '''
@@ -65,6 +66,7 @@ class Game:
         self.players.add(self.player_2)
         self.balls.add(self.ball)
         self.balls.add(self.Linea)
+        #all the sprites from the sprites files are now added into the project file, incorporated into the game
         self.run()
         # create new player object
     def run(self):
@@ -92,6 +94,7 @@ class Game:
                     self.ball.vx = -self.ball.vx
                 self.ball.vy = self.ball.vy + randint(-2,2)
                 print(self.ball.vx)
+                #Every time the ball gets hit, it increase by a little until you get to 10.74, then it will just stay
 
                 
 
@@ -108,6 +111,8 @@ class Game:
         self.screen.fill(BLACK)
         self.players.draw(self.screen)
         self.balls.draw(self.screen)
+        #Draws the sprites onto the screen
+        #double buffer
         pg.display.flip()
 
     def show_start_screen(self):

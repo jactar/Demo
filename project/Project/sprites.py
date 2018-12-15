@@ -20,39 +20,30 @@ class Player(Sprite):
         self.up = pg.K_UP
         self.down = pg.K_DOWN
     def wall1_collision(self):
-        if self.rect.y >= HEIGHT - 5 or self.rect.y <= 5:
+        if self.rect.y >= HEIGHT - 10 or self.rect.y <= 10:
             self.vy = -self.vy
-
+        # If it gets within a certain distance of the Height on both sides, it bounces back but it glitches
     def update(self):
         self.vy = 0
         self.vx = 0
         # self.gravity()
         keys = pg.key.get_pressed()
         if keys[self.up]:
-            self.vy = -7.5
+            self.vy = -7
         if keys[self.down]:
-            self.vy = 7.5
-        self.wall1_collision
-        # if keys[pg.K_UP] and self.falling == False:
-        #     self.jump()  
+            self.vy = 7
+        if keys[pg.K_BACKSPACE]:
+            pg.quit()
+        #The controls to the game including how to exit
+        self.wall1_collision()
+        
 
-        # self.rect.x += self.vx
         self.rect.y += self.vy
-    def gravity(self):
-        if self.rect.x < HEIGHT-40:
-            self.falling = True
-            self.vx -= 10
-        elif self.rect.x >= HEIGHT: 
-            self.falling = False
-            self.vx = 120
-            self.rect.x = HEIGHT-10
 
 
     # def borders(self):
     #     if self.rect.x == WIDTH:
     #         self.vx = 0
-    def jump(self):
-        self.vx = -85
     
 class Object(Sprite):
     def __init__(self):
@@ -61,6 +52,7 @@ class Object(Sprite):
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH*6/12, HEIGHT/2)
+        #Adds in the middle line of the game
 
 class Ball(Sprite):
     def __init__(self):
@@ -73,16 +65,30 @@ class Ball(Sprite):
         self.velocity = VELOCITY
         self.vx = self.velocity
         self.vy = 0
+        #Adds in the ball into the game with its starting point and speed
     def wall_collision(self):
         if self.rect.y >= HEIGHT - 5 or self.rect.y <= 5:
             self.vy = -self.vy
+        #It bounces back into the game if it hits any of the sides of the screen
     def pass_paddles(self):
         if self.rect.x >= WIDTH - 5 or self.rect.x <= 5:
             self.rect.center = (WIDTH/2, HEIGHT/2)
             self.vx = 2.5
             self.vy = 0
+        #If it passes the paddles, it will bounce back to the other side
+    def scoring(self):
+        self.score = 0
+        self.score2 = 0
+        if self.rect.x >= WIDTH - 5:
+            self.score += 1
+            print(self.score)
+        if self.rect.x <= 5:
+            self.score2 += 0
+            print(self.score2)
     def update(self):
         self.wall_collision()
         self.pass_paddles()
         self.rect.x += self.vx
         self.rect.y += self.vy
+        #updates everything for the game
+    #def scoring(self):
